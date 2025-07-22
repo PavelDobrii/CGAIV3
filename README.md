@@ -13,7 +13,7 @@ This repository provides a fully offline pipeline for generating short stories w
 | Service   | Purpose                  | Image/Technology |
 |-----------|--------------------------|------------------|
 | `llm`     | Story generation         | [Ollama](https://github.com/jmorganca/ollama) with `llama3:8b-instruct` |
-| `tts`     | Text to speech           | [Piper](https://github.com/rhasspy/piper) |
+| `tts`     | Text to speech           | [Piper](https://github.com/rhasspy/piper) (ghcr.io/rhasspy/piper:1.2) |
 | `subtitles` | Subtitle generation    | [WhisperX&nbsp;2.1](https://github.com/m-bain/whisperX) |
 | `api`     | REST interface           | FastAPI/uvicorn |
 
