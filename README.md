@@ -14,7 +14,7 @@ This repository provides a fully offline pipeline for generating short stories w
 |-----------|--------------------------|------------------|
 | `llm`     | Story generation         | [Ollama](https://github.com/jmorganca/ollama) with `llama3:8b-instruct` |
 | `tts`     | Text to speech           | [Piper](https://github.com/rhasspy/piper) |
-| `subtitles` | Subtitle generation    | [WhisperX&nbsp;2.1](https://github.com/m-bain/whisperX) |
+| `subtitles` | Subtitle generation    | [WhisperX 2.1](https://github.com/m-bain/whisperX) (`ghcr.io/m-bain/whisperx:2.1`) |
 | `api`     | REST interface           | FastAPI/uvicorn |
 
 All services are started via `docker-compose` and communicate on an internal Docker network. Generated files are written to the `storage/` directory which is mounted into the containers.
