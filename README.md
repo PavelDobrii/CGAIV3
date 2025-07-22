@@ -51,9 +51,11 @@ The first start will download the models. Once all containers are running, the A
 ```bash
 curl -X POST http://localhost:8000/generate/story \
   -H "Content-Type: application/json" \
-  -d '{"prompt":"Tell me about space travel","style":"narrative","interest_tag":"science","language":"en"}'
+  -d '{"prompt":"Tell me about space travel","style":"narrative","interest_tag":"science","language":"en","search_query":"latest space news"}'
 ```
 This returns the ID of the story and the path to the Markdown file.
+You can optionally pass a `search_query` field to include recent information from
+DuckDuckGo search results in the story prompt.
 
 ### 2. Convert the story to speech
 
@@ -80,7 +82,7 @@ One call can perform all steps:
 ```bash
 curl -X POST http://localhost:8000/generate/full \
   -H "Content-Type: application/json" \
-  -d '{"prompt":"Tell me about space travel","style":"narrative","interest_tag":"science","language":"en"}'
+  -d '{"prompt":"Tell me about space travel","style":"narrative","interest_tag":"science","language":"en","search_query":"latest space news"}'
 ```
 
 ### Language selection
@@ -96,6 +98,7 @@ of regenerating the content.
 ## Offline Use
 
 All models are pulled and executed locally. After the first download, the pipeline works without Internet access. Generated assets remain in the `storage/` directory for reuse.
+If you supply a `search_query`, the API performs an online DuckDuckGo search, so Internet access is required for that feature.
 
 ## License
 
