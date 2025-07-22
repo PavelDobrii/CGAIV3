@@ -1,0 +1,49 @@
+version: '3.9'
+
+services:
+  llm:
+    image: ollama/ollama
+    ports:
+      - '11434:11434'
+    volumes:
+      - ollama-data:/root/.ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+
+  tts:
+    image: ghcr.io/rhasspy/piper:latest
+    volumes:
+      - ./storage/audio:/data/audio
+    command: --model en_US-amy-low.onnx --output_file /data/audio/output.mp3
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+
+  subtitles:
+    image: ghcr.io/m-bain/whisperx:latest
+    volumes:
+      - ./storage:/data
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+
+  api:
+    build: ./api
+    ports:
+      - '8000:8000'
+    volumes:
+      - ./storage:/app/storage
+    depends_on:
+      - llm
+      - tts
+      - subtitles
+
+volumes:
+  ollama-data:

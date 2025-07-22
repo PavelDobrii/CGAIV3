@@ -1,0 +1,7 @@
+# Ignore generated content
+storage/audio/*
+storage/subtitles/*
+storage/markdown/*
+!storage/audio/.gitkeep
+!storage/subtitles/.gitkeep
+!storage/markdown/.gitkeep
