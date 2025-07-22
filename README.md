@@ -7,6 +7,7 @@ This repository provides a fully offline pipeline for generating short stories w
 - Minimum **16&nbsp;GB RAM**
 - GPU with at least **8&nbsp;GB VRAM**
 - Docker with GPU access (e.g. NVIDIA Container Toolkit)
+- Docker Compose v2 or later (the `docker compose` CLI)
 
 ## Components
 
@@ -17,7 +18,7 @@ This repository provides a fully offline pipeline for generating short stories w
 | `subtitles` | Subtitle generation    | [WhisperX&nbsp;2.1](https://github.com/m-bain/whisperX) |
 | `api`     | REST interface           | FastAPI/uvicorn |
 
-All services are started via `docker-compose` and communicate on an internal Docker network. Generated files are written to the `storage/` directory which is mounted into the containers.
+All services are started via `docker compose` and communicate on an internal Docker network. Generated files are written to the `storage/` directory which is mounted into the containers.
 
 ```
 storage/
