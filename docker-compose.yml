@@ -25,7 +25,7 @@ services:
             - capabilities: [gpu]
 
   subtitles:
-    image: ghcr.io/m-bain/whisperx:latest
+    image: ghcr.io/m-bain/whisperx:2.1
     volumes:
       - ./storage:/data
     deploy:
