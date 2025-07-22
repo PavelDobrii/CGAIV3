@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Body, HTTPException
 import requests
+from duckduckgo_search import ddg
 import subprocess
 from pathlib import Path
 import uuid
@@ -18,12 +19,36 @@ LANG_TO_VOICE = {
 
 app = FastAPI()
 
+
+def search_snippets(query: str, max_results: int = 3) -> str:
+    """Return a newline separated list of snippets or links from DuckDuckGo."""
+    if not query:
+        return ""
+    try:
+        results = ddg(query, max_results=max_results) or []
+    except Exception:
+        results = []
+    snippets = []
+    for res in results:
+        title = res.get("title")
+        href = res.get("href")
+        body = res.get("body") or res.get("snippet")
+        if body:
+            snippets.append(body)
+        if href:
+            snippets.append(href)
+        elif title:
+            snippets.append(title)
+    return "\n".join(snippets)
+
 @app.post('/generate/story')
 def generate_story(params: dict = Body(...)):
     prompt = params.get('prompt', '')
     style = params.get('style', '')
     interest_tag = params.get('interest_tag', '')
     language = params.get('language', 'en')
+    search_query = params.get('search_query')
+    references = search_snippets(search_query) if search_query else ''
     full_prompt = (
         f"{prompt}\n"
         f"Write a {style} short story about {interest_tag} in {language}. "
@@ -31,6 +56,8 @@ def generate_story(params: dict = Body(...)):
         "cite at least two sources."
     )
     full_prompt = "".join(full_prompt)
+    if references:
+        full_prompt += "\nUse the following references in the story:\n" + references
 
     resp = requests.post('http://llm:11434/api/generate', json={
         'model': 'llama3:8b-instruct',
