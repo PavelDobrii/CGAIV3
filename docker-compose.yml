@@ -14,7 +14,7 @@ services:
             - capabilities: [gpu]
 
   tts:
-    image: ghcr.io/rhasspy/piper:latest
+    image: rhasspy/piper:latest
     volumes:
       - ./storage/audio:/data/audio
     command: --model en_US-amy-low.onnx --output_file /data/audio/output.mp3
